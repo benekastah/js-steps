@@ -76,45 +76,45 @@ If you are a coffeescripter, the code looks even nicer.
 
 There are only a few functions to remember:
 
-    1 `steps([context, [args]])`
-    This function simply returns an object with our other API calls attached. Behind the scenes,
-    it instantiates a new object for us to use throughout an async session.
-    
-    2 `steps().sequence(fn1, [fn2, [fn3, ... [fnN]]])`
-    This function executes a series of functions in sequence. In each case the next function is
-    fired when the current function calls `this.step.next`. Any information passed to `this.step.next`
-    will be forwarded to the next function's arguments.
-    
-    Step object:
-    
-        * next: Call the next function
-        * success: Finish the process and call the callback
-        * error: Finish the process and call the errback
+  1 `steps([context, [args]])`
+  This function simply returns an object with our other API calls attached. Behind the scenes,
+  it instantiates a new object for us to use throughout an async session.
   
-    3 `steps().parallel(fn2, [fn2, [fn3, ... [fnN]]])`
-    This function executes all the listed functions immediately. Once each function calls `this.step.done`
-    the process will end and the callback will be fired. Data passed to `this.step.done` will be collected
-    into an array in the order the functions were listed (not in the order of execution).
+  2 `steps().sequence(fn1, [fn2, [fn3, ... [fnN]]])`
+  This function executes a series of functions in sequence. In each case the next function is
+  fired when the current function calls `this.step.next`. Any information passed to `this.step.next`
+  will be forwarded to the next function's arguments.
+  
+  Step object:
+  
+    * next: Call the next function
+    * success: Finish the process and call the callback
+    * error: Finish the process and call the errback
+
+  3 `steps().parallel(fn2, [fn2, [fn3, ... [fnN]]])`
+  This function executes all the listed functions immediately. Once each function calls `this.step.done`
+  the process will end and the callback will be fired. Data passed to `this.step.done` will be collected
+  into an array in the order the functions were listed (not in the order of execution).
+  
+  Step object:
+  
+    * done: declares current path as finished
+    * error: Finish the process and call the errback
+  
+  4 `steps().each(collection, fn)`
+  In this function, `fn` will execute for each item in the collection (be it an object or array).
+  When `this.step.done` is called for each item, the process completes and the callback is fired.
+  
+  Step object:
+  
+    * value: current collection item's value
+    * index: current index in collection
+    * collection: the collection
+    * done: declares current path as finished
+    * error: Finish the process and call the errback
     
-    Step object:
-    
-        * done: declares current path as finished
-        * error: Finish the process and call the errback
-    
-    4 `steps().each(collection, fn)`
-    In this function, `fn` will execute for each item in the collection (be it an object or array).
-    When `this.step.done` is called for each item, the process completes and the callback is fired.
-    
-    Step object:
-    
-        * value: current collection item's value
-        * index: current index in collection
-        * collection: the collection
-        * done: declares current path as finished
-        * error: Finish the process and call the errback
-      
-    5 `steps().sequence|parallel|each().success(fn)`
-    This function will be called on success of the entire process.
-    
-    6 `steps().(sequence|parallel|each).error(fn)`
-    This function will be called on error.
+  5 `steps().sequence|parallel|each().success(fn)`
+  This function will be called on success of the entire process.
+  
+  6 `steps().(sequence|parallel|each).error(fn)`
+  This function will be called on error.
