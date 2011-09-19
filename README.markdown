@@ -15,6 +15,8 @@ Some guiding principles:
   * The asynchronous code path should be easy to identify
   * Parallel processes culminating in a single callback should be trivial
 
+---
+
 Behold: this mess
 
 ```javascript
