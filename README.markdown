@@ -7,7 +7,8 @@ $ npm install steps
 ```
 
 Steps is a simple way to manage a few of the most common async programming problems in a more readable way.
-Basic ideas:
+
+Some guiding principles:
 
   * Using vertical space is preferable to using horizontal space
   * The endpoint of a process should be easy to identify
