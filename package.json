@@ -14,5 +14,7 @@
   , "author": "Paul Harper <benekastah@gmail.com>"
   , "homepage": ""
   , "repository": ""
-  , "dependencies": {}
+  , "engines": {
+      "node": '0.4.*'
+  }
 }
