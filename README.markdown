@@ -17,9 +17,17 @@ Basic ideas:
 Behold: this mess
 
 ```javascript
-var filesModified = [];
+var filesModified = [],
+    count = 0;
+
+function tryFinish(length) {
+  if (++count === length) {
+    // Continue on your way now that the task is done
+  }
+}
 
 fs.readdir("./", function (err, files) {
+  tryFinish = tryFinish.bind(null, files.length);
   files.forEach(function (file) {
     (function () {
       file = "./" + file;
@@ -33,11 +41,11 @@ fs.readdir("./", function (err, files) {
              
               fs.writeFile(file, newData, function (err) {
                 filesModified.push(file);
-                // Continue on your way now that the task is done
+                tryFinish();
               });
             }
           });
-        }
+        } else tryFinish();
       });
     })(file)
   });
@@ -104,9 +112,9 @@ There are only a few functions to remember:
      will be forwarded to the next function's arguments.
     
      Step object:
-       * next: Call the next function
-       * success: Finish the process and call the callback
-       * error: Finish the process and call the errback
+       * `next`: Call the next function
+       * `success`: Finish the process and call the callback
+       * `error`: Finish the process and call the errback
   
   3. `steps().parallel(fn2, [fn2, [fn3, ... [fnN]]])`
      This function executes all the listed functions immediately. Once each function calls `this.step.done`
@@ -114,19 +122,19 @@ There are only a few functions to remember:
      into an array in the order the functions were listed (not in the order of execution).
     
      Step object:
-       * done: declares current path as finished
-       * error: Finish the process and call the errback
+       * `done`: declares current path as finished
+       * `error`: Finish the process and call the errback
     
   4. `steps().each(collection, fn)`
      In this function, `fn` will execute for each item in the collection (be it an object or array).
      When `this.step.done` is called for each item, the process completes and the callback is fired.
   
      Step object:
-       * value: current collection item's value
-       * index: current index in collection
-       * collection: the collection
-       * done: declares current path as finished
-       * error: Finish the process and call the errback
+       * `value`: current collection item's value
+       * `index`: current index in collection
+       * `collection`: the collection
+       * `done`: declares current path as finished
+       * `error`: Finish the process and call the errback
       
   5. `steps().sequence|parallel|each().success(fn)`
      This function will be called on success of the entire process.
