@@ -17,11 +17,14 @@ fs.readdir("./", function (err, files) {
   files.forEach(function (file) {
     (function () {
       file = "./" + file;
+      
       fs.stat(file, function (err, stats) {
         if (stats.isFile()) {
+         
           fs.readFile(file, 'utf8', function (err, data) {
             var newData = data.replace(/gnome/g, "penguin");
             if (newData !== data) {
+             
               fs.writeFile(file, newData, function (err) {
                 filesModified.push(file);
                 // Continue on your way now that the task is done
@@ -44,28 +47,37 @@ var filesModified = [];
 
 steps().sequence(function () {
   fs.readdir("./", this.step.next);
-}, function (err, files) {
+}, 
+
+function (err, files) {
+ 
   steps().each(files, function () {
     var file = "./" + this.step.value;
     steps().sequence(function () {
       fs.stat(file, this.step.next);
-    }, function (err, stats) {
+    }, 
+    
+    function (err, stats) {
       if (stats.isFile()) {
         fs.readFile(file, 'utf8', this.step.next);
       } else { this.step.success(); }
-    }, function () {
+    }, 
+    
+    function () {
       var newData = data.replace(/gnome/g, "penguin");
       if (newData !== data) {
         fs.writeFile(file, newData, this.step.next);
       }
-    }, function (err) {
+    }, 
+    
+    function (err) {
       filesModified.push(file);
       this.step.success();
     });
-  })
-  .success(this.step.success);
-})
-.success(function () {
+    
+  }).success(this.step.success);
+  
+}).success(function () {
   // Continue on your way now that the task is done
 });
 ```
