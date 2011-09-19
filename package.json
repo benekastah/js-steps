@@ -1,0 +1,18 @@
+{
+    "name": "steps"
+  , "description": "Makes async programming manageable (dare I say delightful?) without wasting horizontal space."
+  , "keywords": [
+      "async"
+    , "asynchronous"
+    , "async programming"
+    , "asynchronous programming"
+    , "steps"
+  ]
+  , "version": "0.0.1"
+  , "private": false
+  , "main": "./steps"
+  , "author": "Paul Harper <benekastah@gmail.com>"
+  , "homepage": ""
+  , "repository": ""
+  , "dependencies": {}
+}
