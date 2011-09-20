@@ -89,7 +89,7 @@ function (err, files) {
     
     function (err) {
       filesModified.push(file);
-      this.step.success();
+      this.step.done();
     });
     
   }).success(this.step.success);
